@@ -11,15 +11,19 @@
         class="h-full w-full relative bottom-0 flex justify-center"
       >
       <!-- 
-            transition-duration: ${Math.abs(elevator.currentFloor - (elevator.targetFloor || 0)) * 2000}ms;
+            transition-duration: ${Math.abs(elevator.originFloor - (elevator.targetFloor || 0)) * store.elevatorSpeed}ms;
       -->
         <div
-          class="border border-black w-full h-full absolute bottom-0 z-10"
+          class="grid place-items-center border border-black w-full h-full absolute bottom-0 z-10 transition-all"
           :style="`
             bottom: calc((100% * ${elevator.currentFloor - 1}) + ${elevator.currentFloor - 1}px);
+            transition-duration: ${store.elevatorSpeed}ms;
           `"
         >
           {{ elevatorStatus }}
+          <span class="text-xs absolute bottom-[-18px] text-gray-500 whitespace-nowrap w-max">
+            {{ Array.from(elevator.stops).join(", ") }}
+          </span>
         </div>
       </div>
     </div>
@@ -27,26 +31,24 @@
 </template>
 
 <script setup lang="ts">
-import type { Elevator } from '@/types/elevator';
-import { ref, onMounted, watch, computed, useTemplateRef } from 'vue';
+import { useElevatorStore } from '@/stores/elevatorStore';
+import { ELEVATOR_STATUS, type Elevator } from '@/types/elevator';
+import { computed } from 'vue';
+
+const store = useElevatorStore();
 
 const props = defineProps<{
   floors: number[];
   elevator: Elevator;
 }>();
 
-if (props.elevator.id === 1) {
-  console.log("ElevatorShafts.vue ~ line 36: elevator:", props.elevator);
-}
+console.log("ElevatorShafts.vue ~ line 43: props.elevator.stops:", props.elevator.stops);
 
 const elevatorStatus = computed(() => {
-    if (props.elevator.isDoorOpen) return '🚪';
-    if (props.elevator.isMoving) return props.elevator.direction === 'up' ? '⬆️' : '⬇️';
-    return '•';
-  });
-
-const carEl = useTemplateRef<HTMLElement[] | null>("elevator-car-id-1");
-const carHeight = ref(0);
+  if (props.elevator.status === ELEVATOR_STATUS.LOADING_UNLOADING) return '🚪';
+  if (props.elevator.status === ELEVATOR_STATUS.MOVING) return props.elevator.direction === 'up' ? '⬆️' : '⬇️';
+  return '•';
+});
 
 </script>
 

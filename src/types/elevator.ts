@@ -1,22 +1,27 @@
+export enum DIRECTION {
+  UP = 'up',
+  DOWN = 'down',
+  IDLE = 'idle',
+}
+
+export enum ELEVATOR_STATUS {
+  IDLE = 'idle',
+  MOVING = 'moving',
+  LOADING_UNLOADING = 'loading/unloading',
+}
+
 export interface Elevator {
   id: number;
+  originFloor: number;
   currentFloor: number;
   targetFloor?: number | null;
-  direction: 'up' | 'down' | 'idle';
-  isMoving: boolean;
-  isDoorOpen: boolean;
-  destinations: Set<number>;
+  direction: DIRECTION;
+  status: ELEVATOR_STATUS;
+  stops: Set<number>;
 }
 
 export interface FloorRequest {
   pickupFloor: number;
-  destinationFloor: number;
-  direction: 'up' | 'down';
-  timestamp: number;
-}
-
-export interface ElevatorState {
-  elevators: Elevator[];
-  floorRequests: FloorRequest[];
-  floors: number[];
+  destinationFloors: number[];
+  direction: DIRECTION;
 }

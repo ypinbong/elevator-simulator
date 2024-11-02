@@ -16,7 +16,7 @@ function moveElevator() {
 
 <template>
   <main class="overflow-auto">
-    <!-- <div class="flex flex-col">
+    <div class="flex flex-col">
       <label>Floor Origin</label>
       <div class="flex gap-1">
         <div class="flex items-center" v-for="floor in store.floors">
@@ -50,9 +50,9 @@ function moveElevator() {
     >
       <h1>Car{{ elevator.id }}</h1>
       <p>Current floor: {{ elevator.currentFloor }}</p>
+      <p>Target floor: {{ elevator.targetFloor }}</p>
       <p>Direction: {{ elevator.direction }}</p>
-      <p>Is moving: {{ elevator.isMoving }}</p>
-      <p>Is door open: {{ elevator.isDoorOpen }}</p>
-    </div> -->
+      <p>Status: {{ elevator.status }}</p>
+    </div>
   </main>
 </template>

@@ -12,8 +12,8 @@ a {
   color: var(--color-text);
   text-decoration: none !important;
   &.active {
-    /* text-decoration: underline; */
-    border-bottom: 2px solid var(--color-text);
+    color: var(--color-heading);
+    /* border-bottom: 2px solid var(--color-text); */
   }
 }
 
