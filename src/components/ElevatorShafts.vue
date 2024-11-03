@@ -18,7 +18,7 @@
           `"
         >
           {{ elevatorStatusIndicator }}
-          <span class="text-[8px] absolute top-[-18px] text-gray-500 capitalize whitespace-nowrap w-max">
+          <span class="text-[9px] absolute top-[-18px] text-gray-500 capitalize whitespace-nowrap w-max">
             {{ getElevatorStatus }}
           </span>
           <span class="text-xs absolute bottom-[-18px] text-gray-500 whitespace-nowrap w-max">

@@ -11,15 +11,10 @@
 a {
   color: var(--color-text);
   text-decoration: none !important;
-  font-weight: 700;
   &.active {
     color: var(--color-heading);
     /* border-bottom: 2px solid var(--color-text); */
   }
-}
-
-h1 {
-  font-weight: 700;
 }
 
 .green {
