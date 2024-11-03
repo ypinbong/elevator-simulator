@@ -57,6 +57,7 @@ const currentFloorRequests = (floor: number, direction: DIRECTION) => {
       return item.pickupFloor === floor && item.direction === direction && item.requestStatus !== REQUEST_STATUS.PICKED_UP;
     })
     .map(request => {
+      console.log("ElevatorSim.vue ~ line 60: request:", request);
       return request.destinationFloors;
     });
   return reqs;
