@@ -35,4 +35,5 @@ export interface FloorRequest {
   destinationFloors: number[];
   direction: DIRECTION;
   requestStatus: REQUEST_STATUS;
+  assignedCar?: number;
 }

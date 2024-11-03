@@ -72,12 +72,16 @@ export const useElevatorStore = defineStore('elevator', () => {
     let destinationFloors: number[] = [];
 
     const uniqueFloors = new Set<number>();
-    const potentialFloors = Array.from({ length: BUILDING_LEVELS }, (_, i) => i + 1)
+    let potentialFloors = Array.from({ length: BUILDING_LEVELS }, (_, i) => i + 1)
       .filter(floor => 
       floor !== pickupFloor &&
       ((direction === DIRECTION.UP && floor > pickupFloor) ||
       (direction === DIRECTION.DOWN && floor < pickupFloor))
       );
+
+    if (potentialFloors.length === 0) {
+      potentialFloors = [pickupFloor === 1 ? 2 : pickupFloor - 1];
+    }
 
     for (let i = 0; i < RANDOM_FLOOR_REQUESTS_LIMIT && i < potentialFloors.length; i++) {
       uniqueFloors.add(potentialFloors[i]);
@@ -124,7 +128,7 @@ export const useElevatorStore = defineStore('elevator', () => {
       elevator.stops.add(request.pickupFloor);
       // moveElevator(elevator, request.direction);
       floorRequests.value = floorRequests.value.map(item => 
-        item.id === request.id ? { ...item, requestStatus: REQUEST_STATUS.PROCESSING } : item
+        item.id === request.id ? { ...item, requestStatus: REQUEST_STATUS.PROCESSING, assignedCar: elevator.id } : item
       );
 
       //? movement logic

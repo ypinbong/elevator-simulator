@@ -7,7 +7,7 @@ import ElevatorSim from './components/ElevatorSim.vue'
   <header class="h-[60px] flex items-center px-8">
     <h1 class="text-2xl text-[--color-heading]">Proposed Elevator Control System</h1>
   </header>
-  <div class="flex-1 grid grid-cols-2 border-r-1 border-white-200 overflow-hidden">
+  <div class="flex-1 grid lg:grid-cols-2 grid-cols-1 border-r-1 border-white-200 overflow-hidden">
     <ElevatorSim />
     <div class="grid px-6 place-items-center h-full w-full overflow-hidden">
       <div class="container h-[80vh] overflow-auto">

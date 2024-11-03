@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useElevatorStore } from '@/stores/elevatorStore';
 import { ELEVATOR_STATUS, REQUEST_STATUS, type Elevator } from '@/types/elevator';
-import { computed } from 'vue';
 
 const store = useElevatorStore();
 

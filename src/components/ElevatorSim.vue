@@ -48,22 +48,8 @@ import ElevatorShafts from '@/components/ElevatorShafts.vue';
 import { DIRECTION, REQUEST_STATUS } from '@/types/elevator';
 import CaretDown from '@/components/icons/CaretDown.vue';
 import CaretUp from '@/components/icons/CaretUp.vue';
-import { onMounted } from 'vue';
 
 const store = useElevatorStore();
-
-// declare outside scope to potentially clear interval if needs to be stopped
-let automationInterval: number | null = null;
-
-const startAutomation = () => {
-  automationInterval = setInterval(() => {
-    store.generateRandomFloorRequests();
-  }, store.elevatorSpeed * 2);
-};
-
-onMounted(() => {
-  startAutomation();
-});
 
 const currentFloorRequests = (floor: number, direction: DIRECTION) => {
   const reqs = store.floorRequests
