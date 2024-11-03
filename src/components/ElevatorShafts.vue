@@ -10,19 +10,19 @@
         :ref="`elevator-car-id-${elevator.id}`"
         class="h-full w-full relative bottom-0 flex justify-center"
       >
-      <!-- 
-            transition-duration: ${Math.abs(elevator.originFloor - (elevator.targetFloor || 0)) * store.elevatorSpeed}ms;
-      -->
         <div
-          class="grid place-items-center border border-black w-full h-full absolute bottom-0 z-10 transition-all"
+          class="grid place-items-center border border-black w-full h-full absolute bottom-0 z-10 transition-all ease-linear bg-[var(--color-heading)]"
           :style="`
-            bottom: calc((100% * ${elevator.currentFloor - 1}) + ${elevator.currentFloor - 1}px);
+            bottom: calc((100% * ${elevator.nextFloor - 1}) + ${elevator.nextFloor - 1}px);
             transition-duration: ${store.elevatorSpeed}ms;
           `"
         >
-          {{ elevatorStatus }}
+          {{ elevatorStatusIndicator }}
+          <span class="text-[8px] absolute top-[-18px] text-gray-500 capitalize whitespace-nowrap w-max">
+            {{ getElevatorStatus }}
+          </span>
           <span class="text-xs absolute bottom-[-18px] text-gray-500 whitespace-nowrap w-max">
-            {{ Array.from(elevator.stops).join(", ") }}
+            {{ pickedUpRequests }}
           </span>
         </div>
       </div>
@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useElevatorStore } from '@/stores/elevatorStore';
-import { ELEVATOR_STATUS, type Elevator } from '@/types/elevator';
+import { ELEVATOR_STATUS, REQUEST_STATUS, type Elevator } from '@/types/elevator';
 import { computed } from 'vue';
 
 const store = useElevatorStore();
@@ -42,14 +42,42 @@ const props = defineProps<{
   elevator: Elevator;
 }>();
 
-console.log("ElevatorShafts.vue ~ line 43: props.elevator.stops:", props.elevator.stops);
-
-const elevatorStatus = computed(() => {
+const elevatorStatusIndicator = computed(() => {
   if (props.elevator.status === ELEVATOR_STATUS.LOADING_UNLOADING) return '🚪';
   if (props.elevator.status === ELEVATOR_STATUS.MOVING) return props.elevator.direction === 'up' ? '⬆️' : '⬇️';
   return '•';
 });
 
+const getElevatorStatus = computed(() => {
+  let status = '';
+  switch (props.elevator.status) {
+    case ELEVATOR_STATUS.LOADING_UNLOADING:
+      status = "door open";
+      break;
+    case ELEVATOR_STATUS.MOVING:
+      if (pickedUpRequests.value) {
+        status = "delivery";
+      } else {
+        status = "pick up";
+        
+      }
+      break;
+  
+    default:
+      status = props.elevator.status;
+      break;
+  }
+  return status;
+});
+
+const pickedUpRequests = computed(() => {
+  const requests = Array.from(props.elevator.stops).filter(floor => {
+    return store.floorRequests.some(request => {
+      return request.destinationFloors.includes(floor) && request.requestStatus === REQUEST_STATUS.PICKED_UP;
+    });
+  });
+  return requests.join(', ');
+});
 </script>
 
 <style scoped>

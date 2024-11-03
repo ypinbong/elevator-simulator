@@ -45,16 +45,30 @@
 <script setup lang="ts">
 import { useElevatorStore } from '@/stores/elevatorStore';
 import ElevatorShafts from '@/components/ElevatorShafts.vue';
-import { DIRECTION } from '@/types/elevator';
+import { DIRECTION, REQUEST_STATUS } from '@/types/elevator';
 import CaretDown from '@/components/icons/CaretDown.vue';
 import CaretUp from '@/components/icons/CaretUp.vue';
+import { onMounted } from 'vue';
 
 const store = useElevatorStore();
+
+// declare outside scope to potentially clear interval if needs to be stopped
+let automationInterval: number | null = null;
+
+const startAutomation = () => {
+  automationInterval = setInterval(() => {
+    store.generateRandomFloorRequests();
+  }, store.elevatorSpeed * 2);
+};
+
+onMounted(() => {
+  startAutomation();
+});
 
 const currentFloorRequests = (floor: number, direction: DIRECTION) => {
   const reqs = store.floorRequests
     .filter(item => {
-      return item.pickupFloor === floor && item.direction === direction;
+      return item.pickupFloor === floor && item.direction === direction && item.requestStatus !== REQUEST_STATUS.PICKED_UP;
     })
     .map(request => {
       return request.destinationFloors;

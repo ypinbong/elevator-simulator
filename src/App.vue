@@ -10,13 +10,13 @@ import ElevatorSim from './components/ElevatorSim.vue'
   <div class="flex-1 grid grid-cols-2 border-r-1 border-white-200 overflow-hidden">
     <ElevatorSim />
     <div class="grid px-6 place-items-center h-full w-full overflow-hidden">
-      <div class="container max-h-[80vh] overflow-auto">
+      <div class="container h-[80vh] overflow-auto">
         <nav class="flex text-xl sticky top-0 bg-[var(--color-background)] gap-4 pb-4">
-          <RouterLink activeClass="active" to="/">Settings</RouterLink>
+          <RouterLink activeClass="active" to="/">Logs</RouterLink>
           <div class="border-r-2 border-[var(--color-text)] min-h-full flex" />
           <RouterLink activeClass="active" to="/about">About</RouterLink>
         </nav>
-        <div class=" flex-1 w-min-full">
+        <div class="flex-1">
           <RouterView />
         </div>
       </div>
