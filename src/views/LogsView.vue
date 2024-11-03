@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useElevatorStore } from '@/stores/elevatorStore';
 import CaretRightOutline from '@/components/icons/CaretRightOutline.vue';
 import CaretRightDoubleOutline from '@/components/icons/CaretRightDoubleOutline.vue';
 import RocketOutline from '@/components/icons/RocketOutline.vue';
 import InfoCircledOutline from '@/components/icons/InfoCircledOutline.vue';
-import { onMounted, ref } from 'vue';
 import CaretUp from '@/components/icons/CaretUp.vue';
 import CaretDown from '@/components/icons/CaretDown.vue';
 
