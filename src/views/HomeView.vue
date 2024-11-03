@@ -31,7 +31,7 @@ const speedControl = [
 const isAutomationRunning = ref(true);
 
 // declare outside scope to potentially clear interval if needs to be stopped
-let automationInterval: number | null = null;
+let automationInterval: ReturnType<typeof setInterval> | null = null;
 
 const startAutomation = () => {
   isAutomationRunning.value = true;

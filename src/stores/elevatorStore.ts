@@ -134,8 +134,7 @@ export const useElevatorStore = defineStore('elevator', () => {
       //? movement logic
       while (elevator.stops.size > 0) {
         const nextStop = Array.from(elevator.stops)
-          .sort((a, b) => request.direction === DIRECTION.DOWN ? b - a : a - b)
-          .at(0);
+          .sort((a, b) => request.direction === DIRECTION.DOWN ? b - a : a - b)[0];
         if (!nextStop) return;
         elevator.status = ELEVATOR_STATUS.MOVING;
         if (elevator.currentFloor < nextStop) {
